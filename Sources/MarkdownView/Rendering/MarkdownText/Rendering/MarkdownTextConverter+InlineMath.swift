@@ -49,7 +49,7 @@ extension MarkdownTextConverter {
                 inlineMathOccurrence += 1
             case .display:
                 let identifier = placeholderSegment.match.identifier
-                guard mathContext.displayMathStorage[identifier] != nil else {
+                guard let displayLatex = mathContext.displayMathStorage[identifier] else {
                     textContent += TextContent(.string(String(text[placeholderSegment.range])))
                     searchRange = placeholderSegment.range.upperBound..<text.endIndex
                     continue
@@ -60,7 +60,7 @@ extension MarkdownTextConverter {
                         markup: sourceMarkup,
                         role: .math(kind: .display, occurrence: displayMathOccurrence)
                     ),
-                    replacement: nil,
+                    replacement: AttributedString(displayLatex),
                     componentSpacing: configuration.componentSpacing,
                     sizing: .fittingLineFragment
                 ) {

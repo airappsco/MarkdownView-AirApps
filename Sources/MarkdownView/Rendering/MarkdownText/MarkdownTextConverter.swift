@@ -148,7 +148,9 @@ struct MarkdownTextConverter: @MainActor MarkupVisitor {
                     markup: text,
                     role: .math(kind: .display, occurrence: 0)
                 ),
-                replacement: nil,
+                replacement: AttributedString(
+                    mathContext?.displayMathStorage[mathIdentifier] ?? ""
+                ),
                 componentSpacing: configuration.componentSpacing,
                 sizing: .fittingLineFragment
             ) {
